@@ -1,0 +1,4 @@
+default:
+  host: 'https://example.com/api'
+  shoulder: 'pz3'
+  elide_string: false
