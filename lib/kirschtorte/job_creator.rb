@@ -2,6 +2,7 @@ require 'bundler/setup'
 require 'active_support/core_ext/module/qualified_const'
 require 'base64'
 require 'json'
+require 'resque'
 
 module Kirschtorte
   class JobCreator
