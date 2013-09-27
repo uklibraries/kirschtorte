@@ -13,11 +13,12 @@ module Kirschtorte
       # classes here, so instead we test for the existence
       # of the requested worker.
 
-      worker = WorkerDirectory.find payload["type"]["name"]
+      task_name = payload["type"]["name"]
+      worker = WorkerDirectory.find task_name
 
       if worker
         Resque.enqueue worker, payload
-        puts "JobCreator: submitted #{worker_class} task"
+        puts "JobCreator: submitted #{task_name} task"
       else
         puts "JobCreator: no such task available"
       end
