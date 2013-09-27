@@ -1,4 +1,5 @@
 require 'bundler/setup'
+require 'active_support/core_ext/module/qualified_const'
 require 'base64'
 require 'json'
 
@@ -28,9 +29,9 @@ module Kirschtorte
         'Kirschtorte',
         'Worker',
         self.normalize(name)
-      ]
-      if Kernel.const_defined? worker_class
-        Kernel.const_get(worker_class)
+      ].join('::')
+      if Kernel.qualified_const_defined? worker_class
+        Kernel.qualified_const_get(worker_class)
       else
         nil
       end
