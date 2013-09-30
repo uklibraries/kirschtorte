@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/uklibraries/minty-rb.git
-  revision: 408b08194a6b9ecde4b39bcfd42763f9e018eff9
+  revision: 7b7a4d4f8ff141c6196cb76bc1eaa4e266f731ad
   specs:
     minty-rb (0.0.0)
 
