@@ -17,4 +17,5 @@ tmp
 _yardoc
 doc/
 
+config/binder.yml
 config/minter.yml

@@ -1,0 +1,7 @@
+default:
+  host: 'example.com'
+  port: 443
+  use_ssl: true
+  path: '/api'
+  shoulder: 'pz3'
+  elide_string: false
