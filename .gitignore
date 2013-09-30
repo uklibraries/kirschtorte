@@ -17,5 +17,6 @@ tmp
 _yardoc
 doc/
 
+config/abby_normal.yml
 config/binder.yml
 config/minter.yml

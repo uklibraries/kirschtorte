@@ -1,0 +1,3 @@
+default:
+  host: 'https://example.com/api'
+  api_key: 'xxxxxxxxxxxxxxxxxxxxxxxxx'
