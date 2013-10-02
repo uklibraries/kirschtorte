@@ -17,7 +17,7 @@ module Kirschtorte
       worker = WorkerDirectory.find task_name
 
       if worker
-        Resque.enqueue worker, payload
+        Resque.enqueue worker, options[:base64]
         puts "JobCreator: submitted #{task_name} task"
       else
         puts "JobCreator: no such task available"

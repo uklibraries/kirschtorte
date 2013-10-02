@@ -5,7 +5,7 @@ module Kirschtorte
       @api_host = connection["default"]["host"]
       @api_key = connection["default"]["api_key"]
       @default_headers = {
-        'Accept' => "application/vnd.presence.dsb.v1",
+        'Accept' => "application/vnd.abby.normal.v1",
         'Authorization' => "Token token=#{@api_key}",
       }
     end
@@ -31,16 +31,18 @@ module Kirschtorte
         end
         request.set_form_data(body)
       when :put
-        request = Net::HTTP::Put.new(uri.path)
+        request = Net::HTTP::Post.new(uri.path)
         @default_headers.merge(headers).each do |h, v|
           request[h] = v
         end
+        request['_method'] = 'put'
         request.set_form_data(body)
       end
 
-      response = Net::HTTP.start(uri.hostname, uri.port) {|http|
-        http.request(request)
-      }
+      http = Net::HTTP.new(uri.hostname, uri.port)
+      http.use_ssl = true
+
+      response = http.request(request)
 
       if response.body
         JSON.parse(response.body, :symbolize_names => true)

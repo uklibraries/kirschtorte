@@ -2,5 +2,5 @@ source 'https://rubygems.org'
 
 gem "activesupport"
 gem "minty-rb", :git => "git://github.com/uklibraries/minty-rb.git"
-gem "resque"
+gem "resque", "1.24.1"
 gem "trollop"
