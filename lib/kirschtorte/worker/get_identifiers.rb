@@ -9,27 +9,22 @@ module Kirschtorte
       @queue = :ingest
 
       def self.perform payload
-        data = JSON.parse Base64.strict_decode64(payload), 
-                          symbolize_names: true
-        client = Client.new File.join('config', 'abby_normal.yml')
-        package = Model::Package.new data: data[:package], client: client
-        task = Model::Task.new data: data[:task], client: client
+        g = Kirschtorte::Worker::Generic.new payload
+        identifiers = self.mint_and_bind sip_path: g.package.get(:sip_path),
+                                         dark_archive: g.package.get(:dark_archive)
 
-        identifiers = self.mint_and_bind sip_path: package.get(:sip_path),
-                                         dark_archive: package.get(:dark_archive)
-
-        package.set(:aip_identifier, identifiers[:aip_id])
-        unless package.get(:dark_archive)
-          package.set(:dip_identifier, identifiers[:dip_id])
+        g.package.set(:aip_identifier, identifiers[:aip_id])
+        unless g.package.get(:dark_archive)
+          g.package.set(:dip_identifier, identifiers[:dip_id])
         end
-        package.save
+        g.package.save
 
-        if package.get(:aip_identifier) == identifiers[:aip_id]
+        if g.package.get(:aip_identifier) == identifiers[:aip_id]
           puts "GetIdentifiers: #{identifiers.to_json}"
-          task.complete!
+          g.task.complete!
         else
           puts "GetIdentifiers: FAILED"
-          task.fail!
+          g.task.fail!
         end
       end
 

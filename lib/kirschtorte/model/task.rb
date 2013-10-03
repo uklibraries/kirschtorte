@@ -7,6 +7,13 @@ module Kirschtorte
         @client = options[:client]
         @data = options[:data]
         @resource = "/tasks/#{@data[:id]}"
+        start!
+      end
+
+      def start!
+        @client.submit_request :resource => @resource, 
+                               :method => :put,
+                               :body => {:name => 'started'}
       end
   
       def complete!
