@@ -1,3 +1,20 @@
-default:
-  host: 'https://example.com/api'
-  api_key: 'xxxxxxxxxxxxxxxxxxxxxxxxx'
+host: 'https://example.com/api'
+api_key: 'xxxxxxxxxxxxxxxxxxxxxxxxx'
+local:
+  sip_dir: '/path/to/sips'
+  aip_dir: '/path/to/aips'
+  dip_dir: '/path/to/dips'
+  solr_dir: '/path/to/solr'
+source:
+  username: 'example'
+  host: 'example.com'
+staging:
+  host: 'example.com'
+  aip_dir: '/path/to/aips'
+  dip_dir: '/path/to/dips'
+  solr_dir: '/path/to/solr'
+production:
+  host: 'example.com'
+  aip_dir: '/path/to/aips'
+  dip_dir: '/path/to/dips'
+  solr_dir: '/path/to/solr'

@@ -2,8 +2,8 @@ module Kirschtorte
   class Client
     def initialize config 
       connection = YAML.load(IO.read config)
-      @api_host = connection["default"]["host"]
-      @api_key = connection["default"]["api_key"]
+      @api_host = connection["host"]
+      @api_key = connection["api_key"]
       @default_headers = {
         'Accept' => "application/vnd.abby.normal.v1",
         'Authorization' => "Token token=#{@api_key}",

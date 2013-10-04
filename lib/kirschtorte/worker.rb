@@ -7,3 +7,4 @@ require 'kirschtorte/worker/generic'
 
 # Individual task handlers
 require 'kirschtorte/worker/get_identifiers'
+require 'kirschtorte/worker/pull_sip'
