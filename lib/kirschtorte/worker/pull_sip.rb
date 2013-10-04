@@ -25,7 +25,7 @@ module Kirschtorte
 
         target = pairtree.mk(g.package.get(:aip_identifier)).path
 
-        Rsync.run(source, target) do |result|
+        Rsync.run(source, target, ["-aPOK"]) do |result|
           if result.success?
             puts "PullSip: #{source} -> #{target} succeeded"
             g.task.complete!
