@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem "activesupport"
+gem "embaggen", :git => "git://github.com/uklibraries/embaggen.git"
 gem "minty-rb", :git => "git://github.com/uklibraries/minty-rb.git"
 gem "pairtree"
 gem "rake"

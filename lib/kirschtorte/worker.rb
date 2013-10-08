@@ -6,5 +6,6 @@ require 'kirschtorte/model'
 require 'kirschtorte/worker/generic'
 
 # Individual task handlers
+require 'kirschtorte/worker/create_aip'
 require 'kirschtorte/worker/get_identifiers'
 require 'kirschtorte/worker/pull_sip'
