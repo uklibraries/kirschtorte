@@ -8,7 +8,6 @@ module Kirschtorte
       @queue = :ingest
 
       def self.perform payload
-        puts "HOWDY"
         g = Kirschtorte::Worker::Generic.new payload
         dip_id = g.package.get(:dip_identifier)
 
