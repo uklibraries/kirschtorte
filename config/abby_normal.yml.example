@@ -15,6 +15,7 @@ staging:
   solr_host: 'example.com'
   dip_dir: '/path/to/dips'
   oh_dir: '/path/to/oh'
+  blacklight_dir: '/path/to/blacklight'
   solr_dir: '/path/to/solr'
 production:
   username: 'example'

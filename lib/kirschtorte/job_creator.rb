@@ -44,6 +44,7 @@ module Kirschtorte
            gsub(/AIP/, "Aip").
            gsub(/DIP/, "Dip").
            gsub(/JSON/, "Json").
+           gsub(/into/, "Into").
            gsub(/\s+/, "")
     end
   end
