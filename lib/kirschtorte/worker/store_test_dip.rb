@@ -1,6 +1,7 @@
 require 'bundler/setup'
 require 'net/ssh'
 require 'pairtree'
+require 'rsync'
 
 module Kirschtorte
   module Worker
@@ -16,19 +17,19 @@ module Kirschtorte
           dip_tree = Pairtree.at(config['local']['dip_dir'], create: true)
           dip_id = g.package.get(:dip_identifier)
           dip_path = dip_tree.get(dip_id).path
-  
+
           username = config['staging']['username']
           server = config['staging']['dips_host']
           remote_dips_dir = config['staging']['dip_dir']
           remote_path = File.join remote_dips_dir,
                                   "pairtree_root",
                                   Pairtree::Path.id_to_path(dip_id)
-  
+
           Net::SSH.start(server, username) do |ssh|
             ssh.exec!("/bin/mkdir -p #{remote_path}")
           end
-  
-          Rsync.run("#{dip_path}/", 
+
+          Rsync.run("#{dip_path}/",
                     "#{username}@#{server}:#{remote_path}",
                     ["-aPOK"]) do |result|
             if result.success?

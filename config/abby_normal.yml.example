@@ -11,8 +11,10 @@ source:
 staging:
   username: 'example'
   dips_host: 'example.com'
+  oh_host: 'example.com'
   solr_host: 'example.com'
   dip_dir: '/path/to/dips'
+  oh_dir: '/path/to/oh'
   solr_dir: '/path/to/solr'
 production:
   username: 'example'
