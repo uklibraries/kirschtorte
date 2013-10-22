@@ -37,12 +37,14 @@ module Kirschtorte
                   "#{username}@#{server}:#{remote_path}",
                   ["-aPOK"]) do |result|
           if result.success?
+            remote_dir = config['staging']['blacklight_dir']
             commands = [
-              "cd #{config['local']['blacklight_dir']}",
-              "rake solr:index:json_dir FILE=#{remote_path}",
+              "cd #{remote_dir}",
+              "bundle exec rake solr:index:json_dir FILE=#{remote_path}",
             ].join('; ')
             Net::SSH.start(server, username) do |ssh|
-              ssh.exec!(commands)
+              output = ssh.exec!(commands)
+              puts "IndexIntoTestSolr: #{output}"
             end
             puts "IndexIntoTestSolr: #{solr_path} -> #{server}:#{remote_path} succeeded"
             g.task.complete!

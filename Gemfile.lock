@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/cokernel/kdl-helpers.git
-  revision: 1d5d9a8fc68017f7db8f9753008541e543bfb242
+  revision: 0625cb20115da3adb1da6090d4b0065588c08f82
   specs:
     kdl-helpers (0.0.1)
       bagit
