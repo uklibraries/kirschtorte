@@ -40,7 +40,7 @@ module Kirschtorte
             remote_dir = config['staging']['blacklight_dir']
             commands = [
               "cd #{remote_dir}",
-              "bundle exec rake solr:index:json_dir FILE=#{remote_path}",
+              "rake solr:index:json_dir FILE=#{remote_path}",
             ].join('; ')
             Net::SSH.start(server, username) do |ssh|
               output = ssh.exec!(commands)
