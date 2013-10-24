@@ -7,6 +7,7 @@ module Kirschtorte
 
       def self.perform payload
         # TODO
+        g = Kirschtorte::Worker::Generic.new payload
         g.task.complete!
       end
     end
