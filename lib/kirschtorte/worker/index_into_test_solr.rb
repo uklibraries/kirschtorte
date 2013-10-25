@@ -46,8 +46,13 @@ module Kirschtorte
               output = ssh.exec!(commands)
               puts "IndexIntoTestSolr: #{output}"
             end
-            puts "IndexIntoTestSolr: #{solr_path} -> #{server}:#{remote_path} succeeded"
-            g.task.complete!
+            if output.lines.last =~ /{"responseHeader"=>{"QTime"=>\d+, "status"=>0}}/
+              puts "IndexIntoTestSolr: #{solr_path} -> #{server}:#{remote_path} succeeded"
+              g.task.complete!
+            else
+              puts "IndexIntoTestSolr: #{solr_path} -> #{server}:#{remote_path} failed"
+              g.task.fail!
+            end
           else
             puts "IndexIntoTestSolr: #{solr_path} -> #{server}:#{remote_path} failed"
             g.task.fail!
