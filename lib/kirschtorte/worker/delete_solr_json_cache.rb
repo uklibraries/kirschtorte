@@ -22,6 +22,44 @@ module Kirschtorte
         dip_id = g.package.get(:dip_identifier)
         solr_path = solr_tree.get(dip_id).path
 
+        username = config['staging']['username']
+
+        # Attempt to unindex from test server.
+        #
+        # Failing this attempt is not a failing condition
+        # for the job, but may require some cleanup later.
+        remote_dir = config['staging']['blacklight_dir']
+        remote_path = File.join config['staging']['solr_dir'],
+                                "pairtree_root",
+                                Pairtree::Path.id_to_path(dip_id)
+        commands = [
+          "cd #{remote_dir}",
+          "rake solr:delete_dir DIR=#{remote_path}",
+          "/bin/rm -r #{remote_path}",
+        ].join('; ')
+        server = config['staging']['solr_host']
+        Net::SSH.start(server, username) do |ssh|
+          output = ssh.exec!(commands)
+          puts "DeleteSolrJsonCache: #{output}"
+        end
+
+        # Attempt to remove test DIP.
+        #
+        # Failing this attempt is not a failing condition
+        # for the job, but may require some cleanup later.
+        test_dip_path = File.join config['staging']['dip_dir'],
+                                  "pairtree_root",
+                                  Pairtree::Path.id_to_path(dip_id)
+        server = config['staging']['dips_host']
+        command = "/bin/rm -r #{test_dip_path}"
+        Net::SSH.start(server, username) do |ssh|
+          output = ssh.exec!(command)
+          puts "DeleteSolrJsonCache: #{output}"
+        end
+
+        # Attempt to remove Solr cache from processing
+        # server.  This MUST succeed or the job has
+        # failed.
         FileUtils.rm_r(solr_path, secure: true)
         unless File.exist?(solr_path)
           puts "DeleteSolrJsonCache: #{solr_path} succeeded"
