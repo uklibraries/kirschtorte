@@ -26,6 +26,7 @@ module Kirschtorte
           return
         end
 
+        config = YAML.load_file File.join('config', 'abby_normal.yml')
         dip_tree = Pairtree.at(config['local']['dip_dir'], create: true)
         dip_path = dip_tree.get(dip_id).path
 
