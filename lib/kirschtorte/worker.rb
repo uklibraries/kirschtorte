@@ -6,6 +6,11 @@ require 'kirschtorte/model'
 require 'kirschtorte/worker/generic'
 
 # Individual task handlers
+require 'kirschtorte/worker/check_local_aip_fixity'
+require 'kirschtorte/worker/check_local_dip_fixity'
+require 'kirschtorte/worker/check_remote_aip_fixity'
+require 'kirschtorte/worker/check_remote_dip_fixity'
+require 'kirschtorte/worker/check_remote_test_dip_fixity'
 require 'kirschtorte/worker/create_aip'
 require 'kirschtorte/worker/create_dip'
 require 'kirschtorte/worker/get_identifiers'
