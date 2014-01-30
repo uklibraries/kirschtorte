@@ -30,6 +30,7 @@ module Kirschtorte
                    File.dirname(dip_path),
                    :dip_directory => dip_id
         dipmaker.build
+        dipmaker.manifest!
         puts "CreateDip: #{aip_path} -> #{dip_path} succeeded"
         g.task.complete!
       end
