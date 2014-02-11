@@ -23,8 +23,31 @@ module Kirschtorte
           aip = KDL::Embaggen.new aip_path
           aip.add_directory sip_path
           aip.manifest!
-          puts "CreateAip: #{sip_path} -> #{aip_path} succeeded"
-          g.task.complete!
+
+          # Check validity of bag.
+          #
+          # By construction, we just manifested the bag, so
+          # this should always be true.
+          #
+          # We have some workers available to do this
+          # asynchronously, but it's better to block here
+          # instead.
+          #
+          bag = BagIt::Bag.new aip_path
+
+          if bag.valid?
+            g.package.set(:local_aip_fixed, true)
+            g.package.save
+
+            puts "CreateAip: #{sip_path} -> #{aip_path} succeeded"
+            g.task.complete!
+          else
+            g.package.set(:local_aip_fixed, false)
+            g.package.save
+
+            puts "CreateAip: #{sip_path} -> #{aip_path} failed"
+            g.task.fail!
+          end
         rescue
           puts "CreateAip: #{sip_path} -> #{aip_path} failed"
           g.task.fail!

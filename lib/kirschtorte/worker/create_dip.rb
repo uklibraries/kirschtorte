@@ -30,9 +30,29 @@ module Kirschtorte
                    File.dirname(dip_path),
                    :dip_directory => dip_id
         dipmaker.build
-        dipmaker.manifest!
-        puts "CreateDip: #{aip_path} -> #{dip_path} succeeded"
-        g.task.complete!
+
+        # Check validity of bag.
+        #
+        # By construction, we just manifested the bag, so
+        # this should always be true.
+        #
+        # We have some workers available to do this
+        # asynchronously, but it's better to block here
+        # instead.
+        #
+        bag = BagIt::Bag.new dip_path
+
+        if bag.valid?
+          g.package.set(:local_dip_fixed, true)
+          g.package.save
+          puts "CreateDip: #{aip_path} -> #{dip_path} succeeded"
+          g.task.complete!
+        else
+          g.package.set(:local_dip_fixed, false)
+          g.package.save
+          puts "CreateDip: #{aip_path} -> #{dip_path} failed"
+          g.task.fail!
+        end
       end
     end
   end
