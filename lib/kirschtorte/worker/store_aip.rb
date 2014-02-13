@@ -17,25 +17,34 @@ module Kirschtorte
         aip_id = g.package.get(:aip_identifier)
         aip_path = aip_tree.get(aip_id).path
 
-        username = config['production']['username']
-        server = config['production']['aips_host']
         remote_aips_dir = config['production']['aip_dir']
         remote_path = File.join remote_aips_dir,
                                 "pairtree_root",
                                 Pairtree::Path.id_to_path(aip_id)
 
-        Net::SSH.start(server, username) do |ssh|
-          ssh.exec!("/bin/mkdir -p #{remote_path}")
-        end
+        system("/bin/mkdir -p #{remote_path}")
 
         Rsync.run("#{aip_path}/",
-                  "#{username}@#{server}:#{remote_path}",
+                  "#{remote_path}",
                   ["-aPOK"]) do |result|
           if result.success?
-            puts "StoreAip: #{aip_path} -> #{server}:#{remote_path} succeeded"
-            g.task.complete!
+            bag = BagIt::Bag.new remote_path
+
+            if bag.valid?
+              g.package.set(:remote_aip_fixed, true)
+              g.package.save
+              puts "StoreAip: #{aip_path} -> #{remote_path} succeeded"
+              g.task.complete!
+            else
+              g.package.set(:remote_aip_fixed, false)
+              g.package.save
+              puts "StoreAip: #{aip_path} -> #{remote_path} failed (invalid bag)"
+              g.task.fail!
+            end
           else
-            puts "StoreAip: #{aip_path} -> #{server}:#{remote_path} failed"
+            g.package.set(:remote_aip_fixed, false)
+            g.package.save
+            puts "StoreAip: #{aip_path} -> #{remote_path} failed (rsync returned false)"
             g.task.fail!
           end
         end
