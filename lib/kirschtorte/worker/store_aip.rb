@@ -1,5 +1,6 @@
 require 'bundler/setup'
 require 'net/ssh'
+require 'fileutils'
 require 'pairtree'
 require 'rsync'
 
@@ -22,7 +23,7 @@ module Kirschtorte
                                 "pairtree_root",
                                 Pairtree::Path.id_to_path(aip_id)
 
-        system("/bin/mkdir -p #{remote_path}")
+        FileUtils.mkdir_p remote_path
 
         Rsync.run("#{aip_path}/",
                   "#{remote_path}",
