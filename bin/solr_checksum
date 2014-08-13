@@ -1,0 +1,4 @@
+#!/bin/bash
+PACKAGE=$1
+cd "$PACKAGE"
+md5sum * | sort | md5sum -

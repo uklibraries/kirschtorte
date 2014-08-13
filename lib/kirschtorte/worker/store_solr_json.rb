@@ -37,8 +37,19 @@ module Kirschtorte
                   "#{username}@#{server}:#{remote_path}",
                   ["-aPOK"]) do |result|
           if result.success?
-            puts "StoreSolrJson: #{solr_path} -> #{server}:#{remote_path} succeeded"
-            g.task.complete!
+            local_checksum = %x[#{File.join('bin', 'solr_checksum')} #{solr_path}]
+            remote_checksum = ""
+            Net::SSH.start(server, username) do |ssh|
+              remote_checksum = ssh.exec!("#{config['production']['solr_checksum']} #{remote_path}")
+            end
+
+            if local_checksum == remote_checksum
+              puts "StoreSolrJson: #{solr_path} -> #{server}:#{remote_path} succeeded"
+              g.task.complete!
+            else
+              puts "StoreSolrJson: #{solr_path} -> #{server}:#{remote_path} failed (bad checksum)"
+              g.task.fail!
+            end
           else
             puts "StoreSolrJson: #{solr_path} -> #{server}:#{remote_path} failed"
             g.task.fail!
