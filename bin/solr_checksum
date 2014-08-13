@@ -1,4 +1,5 @@
 #!/bin/bash
 PACKAGE=$1
 cd "$PACKAGE"
+find . -mindepth 1 -name ".*"
 md5sum * | sort | md5sum -
