@@ -20,3 +20,4 @@ doc/
 config/abby_normal.yml
 config/binder.yml
 config/minter.yml
+config/trello.yml

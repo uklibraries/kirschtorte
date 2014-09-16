@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+libdir = File.expand_path(File.join('..', 'lib'), File.dirname(__FILE__))
+$LOAD_PATH.unshift libdir unless $LOAD_PATH.include? libdir
+
+require 'bundler/setup'
+require 'kirschtorte'
+require 'trollop'
+
+opts = Trollop::options do
+  opt :stem, "Stem for NDNP batch names", :type => :string
+  opt :count, "Number of batchlets in the batch", :type => :integer
+end
+
+[:stem, :count].each do |key|
+  Trollop::die key unless opts[key]
+end
+supplier = Kirschtorte::NdnpSupplier.new opts
+supplier.supply

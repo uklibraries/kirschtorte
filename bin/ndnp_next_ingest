@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+libdir = File.expand_path(File.join('..', 'lib'), File.dirname(__FILE__))
+$LOAD_PATH.unshift libdir unless $LOAD_PATH.include? libdir
+
+require 'bundler/setup'
+require 'kirschtorte'
+
+submitter = Kirschtorte::NdnpSubmitter.new
+submitter.submit
