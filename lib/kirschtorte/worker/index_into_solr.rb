@@ -47,6 +47,7 @@ module Kirschtorte
             puts "IndexIntoSolr (secondary): #{server}:#{remote_path} succeeded"
           else
             puts "IndexIntoSolr (secondary): #{server}:#{remote_path} failed"
+            g.task.fail!
           end
         end
 
