@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/cokernel/kdl-helpers.git
-  revision: 35233caa8ca3284474f528673695e6c8fbb3bd15
+  revision: 5b0988bfd00f84bb9f7c364481eeae5767f2e54a
   specs:
     kdl-helpers (0.0.1)
       bagit
@@ -61,7 +61,7 @@ GEM
     builder (3.2.2)
     docopt (0.5.0)
     erubis (2.7.0)
-    exifr (1.1.3)
+    exifr (1.2.0)
     hike (1.2.3)
     i18n (0.6.11)
     json (1.8.1)
@@ -71,7 +71,7 @@ GEM
       mime-types (>= 1.16, < 3)
     mime-types (1.25.1)
     mini_portile (0.6.0)
-    minitest (5.4.1)
+    minitest (5.4.2)
     mono_logger (1.1.0)
     multi_json (1.10.1)
     mustache (0.99.6)

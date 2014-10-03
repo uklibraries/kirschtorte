@@ -27,3 +27,9 @@ production:
   solr_dir: '/path/to/solr'
   solr_host: 'example.com'
   solr_checksum: '/path/to/solr_checksum'
+secondary:
+  username: 'example'
+  blacklight_dir: '/path/to/blacklight'
+  solr_dir: '/path/to/solr'
+  solr_host: 'example.com'
+  solr_checksum: '/path/to/solr_checksum'
