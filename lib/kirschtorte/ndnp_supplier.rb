@@ -27,9 +27,11 @@ module Kirschtorte
 
       return unless @special[:supply]
       idList = @special[:supply].id
+      width = 1 + Math.log10(@count).floor
+      format = "%0#{width}d"
 
       (1..@count).each do |n|
-        batch_name = [@stem, sprintf("%02d", n)].join('_')
+        batch_name = [@stem, sprintf(format, n)].join('_')
         puts "Queueing #{batch_name}"
         Trello::Card.create(
           name: batch_name,
