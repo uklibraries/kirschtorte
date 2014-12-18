@@ -60,7 +60,7 @@ module Kirschtorte
         # Attempt to remove Solr cache from processing
         # server.  This MUST succeed or the job has
         # failed.
-        FileUtils.rm_r(solr_path, secure: true)
+        FileUtils.rm_rf(solr_path, secure: true)
         unless File.exist?(solr_path)
           puts "DeleteSolrJsonCache: #{solr_path} succeeded"
           g.task.complete!

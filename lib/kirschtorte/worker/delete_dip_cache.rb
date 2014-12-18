@@ -22,7 +22,7 @@ module Kirschtorte
         dip_id = g.package.get(:dip_identifier)
         dip_path = dip_tree.get(dip_id).path
 
-        FileUtils.rm_r(dip_path, secure: true)
+        FileUtils.rm_rf(dip_path, secure: true)
         unless File.exist?(dip_path)
           puts "DeleteDipCache: #{dip_path} succeeded"
           g.task.complete!

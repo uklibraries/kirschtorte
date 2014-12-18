@@ -13,7 +13,7 @@ module Kirschtorte
         aip_id = g.package.get(:aip_identifier)
         aip_path = aip_tree.get(aip_id).path
 
-        FileUtils.rm_r(aip_path, secure: true)
+        FileUtils.rm_rf(aip_path, secure: true)
         unless File.exist?(aip_path)
           puts "DeleteAipCache: #{aip_path} succeeded"
           g.task.complete!

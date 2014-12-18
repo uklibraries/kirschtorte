@@ -13,7 +13,7 @@ module Kirschtorte
         sip_id = g.package.get(:aip_identifier)
         sip_path = sip_tree.get(sip_id).path
 
-        FileUtils.rm_r(sip_path, secure: true)
+        FileUtils.rm_rf(sip_path, secure: true)
         unless File.exist?(sip_path)
           puts "DeleteSipCache: #{sip_path} succeeded"
           g.task.complete!
