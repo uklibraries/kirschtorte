@@ -15,7 +15,7 @@ module Kirschtorte
                                          generate_dip_identifiers: g.package.get(:generate_dip_identifiers)
 
         g.package.set(:aip_identifier, identifiers[:aip_id])
-        unless g.package.get(:dark_archive)
+        unless g.package.get(:dark_archive) and not(g.package.get(:generate_dip_identifiers))
           g.package.set(:dip_identifier, identifiers[:dip_id])
         end
         g.package.save
