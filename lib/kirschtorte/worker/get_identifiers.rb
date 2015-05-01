@@ -11,7 +11,8 @@ module Kirschtorte
       def self.perform payload
         g = Kirschtorte::Worker::Generic.new payload
         identifiers = self.mint_and_bind sip_path: g.package.get(:sip_path),
-                                         dark_archive: g.package.get(:dark_archive)
+                                         dark_archive: g.package.get(:dark_archive),
+                                         generate_dip_identifiers: g.package.get(:generate_dip_identifiers)
 
         g.package.set(:aip_identifier, identifiers[:aip_id])
         unless g.package.get(:dark_archive)
@@ -35,7 +36,7 @@ module Kirschtorte
         identifiers = {sip_id: File.basename(options[:sip_path])}
         identifiers[:aip_id] = minter.mint
 
-        unless options[:dark_archive]
+        unless options[:dark_archive] and not(options[:generate_dip_identifiers])
           identifiers[:dip_id] = minter.mint
 
           binder.bind identifiers[:dip_id],
