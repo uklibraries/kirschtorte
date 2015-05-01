@@ -50,7 +50,8 @@ module Kirschtorte
         :batch_type_id => 4, # hardcoded for NDNP
         :server_id => server_id,
         :oral_history => false,
-        :dark_archive => false,
+        :dark_archive => true,
+        :generate_dip_identifiers => true,
         :reprocessing => false,
       }
       puts "Submitting #{card_to_ingest.name} to Abby Normal"
